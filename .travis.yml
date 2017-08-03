@@ -9,8 +9,6 @@ install:
   - npm install
 after_sucess:
   - echo "Success"
-  - echo $TRAVIS_TEST_RESULT
   - firebase deploy --token $FIREBASE_TOKEN
 after_failure:
   - echo "Failure"
-  - echo $TRAVIS_TEST_RESULT
