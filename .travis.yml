@@ -4,8 +4,6 @@ install:
   - echo "installing"
   - npm install -g firebase-tools
   - npm install
-script:
-  - echo "Scripting"  
 after_sucess:
   - echo "Success"
   - echo $TRAVIS_TEST_RESULT
@@ -13,3 +11,5 @@ after_sucess:
 after_failure:
   - echo "Failure"
   - echo $TRAVIS_TEST_RESULT
+script:
+  - echo "Scripting"  
