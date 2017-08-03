@@ -2,13 +2,16 @@ language: node_js
 node_js: "6.10.0"
 script:
   - echo "Scripting"  
-  - echo "test"
 install:
   - echo "installing"
   - npm install -g firebase-tools
   - npm install
-after_sucess:
+after_success:
   - echo "Success"
+  - echo $TRAVIS_TEST_RESULT
   - firebase deploy --token $FIREBASE_TOKEN
 after_failure:
   - echo "Failure"
+  - echo $TRAVIS_TEST_RESULT
+after_script: 
+  - echo "after script"
