@@ -1,0 +1,9 @@
+{
+  "database": {
+    "username": "root",
+    "password": "2017Sheets",
+    "host": "127.0.0.1",
+    "dialect": "sqlite",
+    "storage": "db.sqlite"
+  }
+}
