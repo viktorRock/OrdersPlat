@@ -6,8 +6,6 @@ script:
 install:
   - echo "installing"
   - npm install -g firebase-tools
-  - ls
-  - ./functions/npm install
   - npm install
 after_success:
   - echo "Success"
