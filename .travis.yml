@@ -1,0 +1,17 @@
+language: node_js
+node_js: "4.0"
+install:
+  - echo "installing"
+  - npm install -g firebase-tools
+  - npm install
+script:
+  - echo "Scripting"  
+  - npm start
+
+after_sucess:
+  - echo "Success"
+  - echo $TRAVIS_TEST_RESULT
+  - firebase deploy --token $FIREBASE_TOKEN
+after_failure:
+  - echo "Failure"
+  - echo $TRAVIS_TEST_RESULT
