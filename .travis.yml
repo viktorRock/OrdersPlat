@@ -6,7 +6,6 @@ install:
   - npm install
 script:
   - echo "Scripting"  
-  # - npm start
 after_sucess:
   - echo "Success"
   - echo $TRAVIS_TEST_RESULT
