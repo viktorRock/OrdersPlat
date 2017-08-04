@@ -1,7 +1,8 @@
 {
-  "name": "sheets-api-codelab",
+  "name": "ordersPlat",
   "description": "Generic Orders Plataform",
   "version": "1.0.0",
+  "main": "server.js",
   "license": "Apache-2.0",
   "author": {
     "name": "Paulo Victor",
@@ -9,7 +10,6 @@
   },
   "repository": "https://github.com/viktorRock/OrdersPlat",
   "scripts": {
-    "install" : "npm install nodemon --save",
     "start": "node server.js"
   },
   "dependencies": {
