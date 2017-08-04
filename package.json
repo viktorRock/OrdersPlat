@@ -10,7 +10,8 @@
   },
   "repository": "https://github.com/viktorRock/OrdersPlat",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "start2": "test start 2"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
