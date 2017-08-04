@@ -11,7 +11,7 @@
   "repository": "https://github.com/viktorRock/OrdersPlat",
   "scripts": {
     "start": "node server.js",
-    "start2": "test start 2"
+    "start2": "test start2"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
