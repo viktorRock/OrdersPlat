@@ -10,7 +10,7 @@
   "repository": "https://github.com/viktorRock/OrdersPlat",
   "scripts": {
     "install" : "npm install nodemon --save",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
