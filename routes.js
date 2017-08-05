@@ -71,6 +71,7 @@ router.get('/close/:id', function(req, res, next) {
 
 router.post('/upsert', function(req, res, next) {
   models.Order.upsert(req.body).then(function() {
+    // updateAllSpreadsheets(req,next);
     res.redirect('/');
   }, function(err) {
     next(err);
@@ -80,12 +81,7 @@ router.post('/upsert', function(req, res, next) {
 var SheetsHelper = require('./sheets');
 
 router.post('/spreadsheets', function(req, res, next) {
-  var auth = req.get('Authorization');
-  if (!auth) {
-    return next(Error('É necessário estar logado.'));
-  }
-  var accessToken = auth.split(' ')[1];
-  var helper = new SheetsHelper(accessToken);
+  var helper = getSheetsHelper(req,next);
   var title = 'Relatorio_' + new Date().toLocaleTimeString();
   helper.createSpreadsheet(title, function(err, spreadsheet) {
     if (err) {
@@ -103,6 +99,31 @@ router.post('/spreadsheets', function(req, res, next) {
 
   });
 });
+
+function getSheetsHelper(request,next){
+  var accessToken = getATolkien(request,next);
+  return new SheetsHelper(accessToken);
+}
+
+function getATolkien(request, next){
+  var auth = request.get('Authorization');
+  if (!auth) {
+    return next(Error('É necessário estar logado.'));
+  }
+  return auth.split(' ')[1];
+}
+
+function updateAllSpreadsheets(request,next){
+  var sheetsHelper  = getSheetsHelper(request,next);
+  Sequelize.Promise.all([models.Spreadsheet.findAll(), models.Order.findAll()]).then(function(results) {
+    var spreadSheetsList = results[0];
+    var orders = results[1];
+    spreadSheetsList.forEach(function (spreadSheet) {
+      updateSpreadsheet(spreadSheet,sheetsHelper);
+    });
+    
+  });
+}
 
 function updateSpreadsheet(spreadSheet, sheetsHelper) {
   Sequelize.Promise.all([models.Order.findAll()]).then(function(results) {
