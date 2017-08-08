@@ -20,14 +20,46 @@
 // Bind handlers when the page loads.
 var profileDiv = "#profile"
 var signoutButton;
+var GoogleAuthTkn;
 
-//signOut
-// var signoutButton = document.getElementById('signout-button');
-// signoutButton.onclick = handleSignoutClick;
-/**
- *  Sign out the user upon button click.
- */
- function handleSignoutClick(event) {
+// var config = {
+//   "oidc": {
+//     "oktaUrl": "https://dev-525342.oktapreview.com",
+//     "clientId": "0oabi7ct5jlaJ0hoF0h7",
+//     "clientSecret": "gG_H59WfxOnBfOQpMhTWpDSOFarkGkvBTYy8EXFm",
+//     "redirectUri": "http://localhost:3000/authorization-code/callback"
+//   }
+// }
+// var test = new LoginCustomController(config);
+
+
+// var orgUrl = 'https://dev-525342.oktapreview.com/oauth2/ausbjcmbafTS5Tcb80h7';
+// var orgUrl = 'https://dev-525342-admin.oktapreview.com/admin/app/oidc_client/instance/0oabi7ct5jlaJ0hoF0h7';
+var orgUrl = "https://dev-525342.oktapreview.com";
+// var orgUrl = "https://ordersplat.herokuapp.com";
+
+var redirectUrl = 'https://ordersplat.herokuapp.com/orders';
+var oktaSignIn = new OktaSignIn({baseUrl: orgUrl});
+var oktaSigninEl = "#okta-login-container";
+
+$(oktaSigninEl).ready(function() {
+  oktaSignIn.renderEl(
+    { el: oktaSigninEl },
+    function (res) {
+      if (res.status === 'SUCCESS') { 
+       console.log("Success");
+       res.session.setCookieAndRedirect(redirectUrl); 
+     }else{
+
+      console.log("ELSE");
+    }
+  }
+  );
+});
+
+
+
+function handleSignoutClick(event) {
   gapi.auth2.getAuthInstance().signOut();
 }
 
@@ -66,10 +98,13 @@ function onSignIn(user) {
   var profile = user.getBasicProfile();
   $(profileDiv + ' .name').text(profile.getName());
   $(profileDiv + ' .email').text(profile.getEmail());
-
+  // The ID token you need to pass to your backend:
+  GoogleAuthTkn = user.getAuthResponse().id_token;
   signoutButton = document.getElementById('signOut');
   signoutButton.style.visibility = 'visible';
+  // user.grantOfflineAccess();
 }
+
 
 function signOut() {
   var auth2 = gapi.auth2.getAuthInstance();
@@ -130,3 +165,4 @@ function makeRequest(method, url, callback) {
   });
 }
 
+//
