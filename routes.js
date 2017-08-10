@@ -5,6 +5,7 @@ const router = express.Router();
 const models = require('./models');
 const Sequelize = require('sequelize');
 const SheetsHelper = require('./sheets');
+const extend = require('util')._extend;
 
 const sortCriteriaList = ['createdAt', 'DESC'];
 const reportNamePreffix = "Relatorio_";
@@ -14,8 +15,9 @@ const STATUS_VALUE_DONE = "ENTREGUE";
 const MSG_ORDER_NOT_FOUND = "Pedido não encontrado: ";
 const MSG_AUTH_NEEEDED = "É necessário estar logado.";
 const MSG_FILE_NOT_FOUND = "Arquivo não encontrado: ";
-
 const oauth2 = require('./lib/oauth2');
+
+var tolkien;
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
 router.use(oauth2.template);
@@ -24,27 +26,11 @@ router.use(oauth2.template);
 
 // TODO: Show spreadsheets on the main page.
 router.get('/', function(req, res, next) {
-  console.log("##### 1 - router.get('/',");
-  console.log(res.locals);
-
-  console.log("##### 2 - router.get('/',");
-  console.log(req.session);
-
-  console.log("##### 3 - router.get('/',");
-  console.log(res.authInfo);
-
-  console.log("##### 4 - router.get('/',");
-  console.log(req.session);
-
   res.redirect('/orders');
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login',{
-   locals : res.locals
- });
-  console.log("ordersLOGIN ####");
-  console.log(res.locals);
+router.get('/oktaLogin', function(req, res, next) {
+  res.render('oktaLogin')
 });
 
 router.get('/orders', function(req, res, next) {
@@ -52,16 +38,10 @@ router.get('/orders', function(req, res, next) {
     order: [sortCriteriaList]
   };
   
-  console.log("LOCALS ####");
-  console.log(req._passport.instance._strategies.google._oauth2);
-
-  console.log("LOCALS 2 ####");
-  console.log(res.locals);
-
-  console.log("LOCALS 3 ####");
-  console.log(req.session.passport);
-
-
+  tolkien = 'Bearer ';
+  if(res.locals.profile){
+    tolkien = tolkien + res.locals.profile.tolkien;
+  }
   Sequelize.Promise.all([
     models.Order.findAll(options),
     models.Spreadsheet.findAll(options)
@@ -151,7 +131,8 @@ router.post('/spreadsheets', function(req, res, next) {
 });
 
 function getATolkien(request, next){
-  var auth = request.get('Authorization');
+  // var auth = request.get('Authorization');
+  var auth = tolkien;
   if (!auth) {
     return next(Error(MSG_AUTH_NEEEDED));
   }

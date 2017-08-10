@@ -119,22 +119,23 @@ $(function() {
 });
 
 function makeRequest(method, url, callback) {
-  var auth = gapi.auth2.getAuthInstance();
-  if (!auth.isSignedIn.get()) {
-    return callback(new Error('Signin required.'));
-  }
-  var accessToken = auth.currentUser.get().getAuthResponse().access_token;
+  // var auth = gapi.auth2.getAuthInstance();
+  // if (!auth.isSignedIn.get()) {
+  //   return callback(new Error('Signin required.'));
+  // }
+  // var accessToken = auth.currentUser.get().getAuthResponse().access_token;
   setSpinnerActive(true);
   $.ajax(url, {
     method: method,
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
-    },
-    success: function(response) {
+    headers: 
+    {
+      // 'Authorization': 'Bearer ' + accessToken
+    }
+    ,success: function(response) {
       setSpinnerActive(false);
       return callback(null, response);
-    },
-    error: function(response) {
+    }
+    ,error: function(response) {
       setSpinnerActive(false);
       return callback(new Error(response.responseJSON.message));
     }
