@@ -1,33 +1,51 @@
 /*
-  Copyright 2016 Google, Inc.
+Copyright 2016 Google, Inc.
 
-  Licensed to the Apache Software Foundation (ASF) under one or more contributor
-  license agreements. See the NOTICE file distributed with this work for
-  additional information regarding copyright ownership. The ASF licenses this
-  file to you under the Apache License, Version 2.0 (the "License"); you may not
-  use this file except in compliance with the License. You may obtain a copy of
-  the License at
+Licensed to the Apache Software Foundation (ASF) under one or more contributor
+license agreements. See the NOTICE file distributed with this work for
+additional information regarding copyright ownership. The ASF licenses this
+file to you under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+http://www.apache.org/licenses/LICENSE-2.0
 
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  License for the specific language governing permissions and limitations under
-  the License.
-*/
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.  */
 
 "use strict";
 
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var expresshandlebars = require('express-handlebars');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const expresshandlebars = require('express-handlebars');
+const routes = require('./routes');
+const app = express();
 
-var routes = require('./routes');
+const session = require('express-session');
+const passport = require('passport');
+const config = require('./config');
 
-var app = express();
+
+// [START session]
+// Configure the session and session storage.
+const sessionConfig = {
+  resave: false,
+  saveUninitialized: false,
+  secret: config.get('SECRET'),
+  signed: true
+};
+
+app.use(session(sessionConfig));
+// [END session]
+
+// OAuth2
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require('./lib/oauth2').router);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +64,7 @@ app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log("@@@@@ request = " + req.url);
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

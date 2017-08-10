@@ -5,5 +5,12 @@
     "host": "127.0.0.1",
     "dialect": "sqlite",
     "storage": "db.sqlite"
-  }
+  },
+  "DATA_BACKEND": "mongodb",
+  "CLOUD_BUCKET" : "[YOUR_CLOUD_BUCKET]",
+  "GCLOUD_PROJECT": "[YOUR_PROJECT_ID]",
+  "OAUTH2_CLIENT_ID" : "",
+  "OAUTH2_CLIENT_SECRET" : "",
+  "OAUTH2_CALLBACK" : "",
+  "GOOGLE_SPREADSHEET_SCOPE" : "https://www.googleapis.com/auth/spreadsheets"
 }

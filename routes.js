@@ -1,44 +1,75 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var models = require('./models');
-var Sequelize = require('sequelize');
+const express = require('express');
+const router = express.Router();
+const models = require('./models');
+const Sequelize = require('sequelize');
+const SheetsHelper = require('./sheets');
 
+const sortCriteriaList = ['createdAt', 'DESC'];
+const reportNamePreffix = "Relatorio_";
+const OAUTH_GRANT_TYPE = "refresh_token";
 
-var sortCriteriaList = ['createdAt', 'DESC'];
-var reportNamePreffix = "Relatorio_";
-var OAUTH_GRANT_TYPE = "refresh_token";
+const STATUS_VALUE_DONE = "ENTREGUE";
+const MSG_ORDER_NOT_FOUND = "Pedido não encontrado: ";
+const MSG_AUTH_NEEEDED = "É necessário estar logado.";
+const MSG_FILE_NOT_FOUND = "Arquivo não encontrado: ";
 
-var STATUS_VALUE_DONE = "ENTREGUE";
-var MSG_ORDER_NOT_FOUND = "Pedido não encontrado: ";
-var MSG_AUTH_NEEEDED = "É necessário estar logado.";
-var MSG_FILE_NOT_FOUND = "Arquivo não encontrado: ";
+const oauth2 = require('./lib/oauth2');
+// Use the oauth middleware to automatically get the user's profile
+// information and expose login/logout URLs to templates.
+router.use(oauth2.template);
 
 // var signIn = new OktaSignIn({baseUrl: 'https://ordersplat.herokuapp.com/'});
 
 // TODO: Show spreadsheets on the main page.
 router.get('/', function(req, res, next) {
-  // res.redirect('/login');
-  res.redirect('https://dev-525342.oktapreview.com/home/oidc_client/0oabi7ct5jlaJ0hoF0h7/aln5z7uhkbM6y7bMy0g7');
-  
+  console.log("##### 1 - router.get('/',");
+  console.log(res.locals);
+
+  console.log("##### 2 - router.get('/',");
+  console.log(req.session);
+
+  console.log("##### 3 - router.get('/',");
+  console.log(res.authInfo);
+
+  console.log("##### 4 - router.get('/',");
+  console.log(req.session);
+
+  res.redirect('/orders');
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  res.render('login',{
+   locals : res.locals
+ });
+  console.log("ordersLOGIN ####");
+  console.log(res.locals);
 });
 
 router.get('/orders', function(req, res, next) {
   var options = {
     order: [sortCriteriaList]
   };
+  
+  console.log("LOCALS ####");
+  console.log(req._passport.instance._strategies.google._oauth2);
+
+  console.log("LOCALS 2 ####");
+  console.log(res.locals);
+
+  console.log("LOCALS 3 ####");
+  console.log(req.session.passport);
+
+
   Sequelize.Promise.all([
     models.Order.findAll(options),
     models.Spreadsheet.findAll(options)
     ]).then(function(results) {
       res.render('orders', {
         orders: results[0],
-        spreadsheets: results[1]
+        spreadsheets: results[1],
+        locals : res.locals
       });
     });
   });
@@ -93,14 +124,12 @@ router.get('/orders/close/:id', function(req, res, next) {
 
 router.post('/orders/upsert', function(req, res, next) {
   models.Order.upsert(req.body).then(function() {
-    // updateAllSpreadsheets(req,next);
+    updateAllSpreadsheets(req,next);
     res.redirect('/orders');
   }, function(err) {
     next(err);
   });
 });
-
-var SheetsHelper = require('./sheets');
 
 router.post('/spreadsheets', function(req, res, next) {
   var helper = getSheetsHelper(req,next);
@@ -118,14 +147,8 @@ router.post('/spreadsheets', function(req, res, next) {
      updateSpreadsheet(model,helper);
      return res.json(model);
    });
-
   });
 });
-
-function getSheetsHelper(request,next){
-  var accessToken = getATolkien(request,next);
-  return new SheetsHelper(accessToken);
-}
 
 function getATolkien(request, next){
   var auth = request.get('Authorization');
@@ -133,6 +156,11 @@ function getATolkien(request, next){
     return next(Error(MSG_AUTH_NEEEDED));
   }
   return auth.split(' ')[1];
+}
+
+function getSheetsHelper(request,next){
+  var accessToken = getATolkien(request,next);
+  return new SheetsHelper(accessToken);
 }
 
 function updateAllSpreadsheets(request,next){
@@ -143,7 +171,7 @@ function updateAllSpreadsheets(request,next){
     spreadSheetsList.forEach(function (spreadSheet) {
       updateSpreadsheet(spreadSheet,sheetsHelper);
     });
-    
+
   });
 }
 
@@ -152,7 +180,7 @@ function updateSpreadsheet(spreadSheet, sheetsHelper) {
     var orders = results[0];
     sheetsHelper.sync(spreadSheet.id, spreadSheet.sheetId, orders, function(err) {
       if (err) {
-        console.log("err = " + err);
+        console.log("UpdateSpreadErr = " + err);
         return (err);
       }
       return orders.lenght;
@@ -169,7 +197,7 @@ router.post('/spreadsheets/:id/delete', function(req, res, next) {
     return result.destroy();
   })
   .then(function() {
-    res.redirect('/');
+    res.redirect('/orders');
   }, function(err) {
     next(err);
   });

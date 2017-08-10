@@ -19,45 +19,35 @@
 
 // Bind handlers when the page loads.
 var profileDiv = "#profile"
-var signoutButton;
+var signoutButton = document.getElementById('signOut');
 var GoogleAuthTkn;
 
-// var config = {
-//   "oidc": {
-//     "oktaUrl": "https://dev-525342.oktapreview.com",
-//     "clientId": "0oabi7ct5jlaJ0hoF0h7",
-//     "clientSecret": "gG_H59WfxOnBfOQpMhTWpDSOFarkGkvBTYy8EXFm",
-//     "redirectUri": "http://localhost:3000/authorization-code/callback"
-//   }
-// }
-// var test = new LoginCustomController(config);
+var MSG_USER_SIGNOUT = "Usuário Saiu !";
+var MSG_SHEET_UPDATED = "Relatórios Atualizados";
+var MSG_SHEET_CREATED = "Relatório Criado";
+var MSG_SHEET_DELETED = "Relatório Deletado";
+var msgDict = {
+  'spreadSheetDelete' : MSG_SHEET_DELETED,
+  'spreadSheetCreate' : MSG_SHEET_CREATED,
+  'spreadSheetSync'   : MSG_SHEET_UPDATED
+};
 
+// var orgUrl = "https://dev-525342.oktapreview.com";
+// var redirectUrl = 'https://ordersplat.herokuapp.com/orders';
+// var oktaSignIn = new OktaSignIn({baseUrl: orgUrl});
+// var oktaSigninEl = "#okta-login-container";
 
-// var orgUrl = 'https://dev-525342.oktapreview.com/oauth2/ausbjcmbafTS5Tcb80h7';
-// var orgUrl = 'https://dev-525342-admin.oktapreview.com/admin/app/oidc_client/instance/0oabi7ct5jlaJ0hoF0h7';
-var orgUrl = "https://dev-525342.oktapreview.com";
-// var orgUrl = "https://ordersplat.herokuapp.com";
-
-var redirectUrl = 'https://ordersplat.herokuapp.com/orders';
-var oktaSignIn = new OktaSignIn({baseUrl: orgUrl});
-var oktaSigninEl = "#okta-login-container";
-
-$(oktaSigninEl).ready(function() {
-  oktaSignIn.renderEl(
-    { el: oktaSigninEl },
-    function (res) {
-      if (res.status === 'SUCCESS') { 
-       console.log("Success");
-       res.session.setCookieAndRedirect(redirectUrl); 
-     }else{
-
-      console.log("ELSE");
-    }
-  }
-  );
-});
-
-
+// $(oktaSigninEl).ready(function() {
+//   oktaSignIn.renderEl(
+//     { el: oktaSigninEl },
+//     function (res) {
+//       if (res.status === 'SUCCESS') { 
+//        console.log("Success");
+//        res.session.setCookieAndRedirect(redirectUrl); 
+//      }
+//    }
+//    );
+// });
 
 function handleSignoutClick(event) {
   gapi.auth2.getAuthInstance().signOut();
@@ -100,45 +90,31 @@ function onSignIn(user) {
   $(profileDiv + ' .email').text(profile.getEmail());
   // The ID token you need to pass to your backend:
   GoogleAuthTkn = user.getAuthResponse().id_token;
-  signoutButton = document.getElementById('signOut');
+  
   signoutButton.style.visibility = 'visible';
-  // user.grantOfflineAccess();
 }
 
 
 function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function () {
-   $( profileDiv ).load(window.location.href + " " + profileDiv );
-   console.log('User signed out.');
-   signoutButton.style.visibility = 'hidden';
- });
+
+ // console.log(MSG_USER_SIGNOUT);
+ // signoutButton.style.visibility = 'hidden';
+ // $( profileDiv ).load(window.location.href + " " + profileDiv );
+
 }
-// Add spreadsheet control handlers.
+// Sending User Session to the server
 $(function() {
-  $('button[rel="create"]').click(function() {
-    makeRequest('POST', '/spreadsheets/', function(err, spreadsheet) {
-      if (err) return showError(err);
-      window.location.reload();
-      showMessage('Relatório Criado');
-    });
-  });
-  $('button[rel="sync"]').click(function() {
-    var spreadsheetId = $(this).data('spreadsheetid');
-    var url = '/spreadsheets/' +  spreadsheetId + '/sync';
-    makeRequest('POST', url, function(err) {
-      if (err) return showError(err);
-      showMessage('Relatório Atualizado');
-    });
-  });
-  $('button[rel="delete"]').click(function() {
-    var spreadsheetId = $(this).data('spreadsheetid');
-    var url = '/spreadsheets/' +  spreadsheetId + '/delete';
-    makeRequest('POST', url, function(err) {
-      if (err) return showError(err);
-      showMessage('Relatório Deletado');
-      window.location.reload();
-    });
+  $('.user-session').click(function() {
+    console.log("user-session !!!");
+    var url = $(this).attr('href');
+    var relatedElem = $(this).attr('rel');
+    var method = 'POST';
+    if ($(this).closest('a'))
+      makeRequest('POST', url, function(err, spreadsheet) {
+        if (err) return showError(err);
+        window.location.reload();
+        if(!msgDict[relatedElem]){showMessage(msgDict[relatedElem]);}
+      });
   });
 });
 

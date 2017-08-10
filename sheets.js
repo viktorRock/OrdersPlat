@@ -30,8 +30,7 @@
     this.service = google.sheets({version: 'v4', auth: auth});
   };
 
-  module.exports = SheetsHelper;
-
+  
 /**
  * Create a spreadsheet with the given name.
  * @param  {string}   title    The name of the spreadsheet.
@@ -354,3 +353,4 @@ function getColumnForField(field) {
     return result;
   });
 }
+module.exports = SheetsHelper;

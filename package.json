@@ -13,13 +13,16 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "@okta/okta-signin-widget": "^2.1.0",
     "body-parser": "~1.13.2",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.5",
     "google-auth-library": "^0.10.0",
     "googleapis": "^20.1.0",
     "morgan": "^1.7.0",
+    "nconf": "^0.8.4",
+    "passport": "^0.3.2",
+    "passport-google-oauth20": "^1.0.0",
     "sequelize": "^3.21.0",
     "sqlite3": "^3.1.8",
     "u2f-api-polyfill": "^0.4.3"
