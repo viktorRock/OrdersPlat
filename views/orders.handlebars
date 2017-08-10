@@ -35,13 +35,13 @@
           </table>
         </div>
         <div class="mdl-card__actions">
-          <a class="user-session mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/orders/close/{{id}}">Finalizar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/orders/close/{{id}}">Finalizar
             <i class="material-icons">done</i>
           </a>
-          <a class="user-session mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/edit/{{id}}">Editar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/edit/{{id}}">Editar
             <i class="material-icons">edit</i>
           </a>
-          <a class="user-session mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}">Deletar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}">Deletar
             <i class="material-icons">delete</i>
           </a>
           <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="https://pag.ae/bcmHYXC">Pagar
@@ -50,7 +50,7 @@
         </div>
       </div>
       {{/each}}
-      <a class="user-session mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" href="/orders/create">
+      <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" href="/orders/create">
         <i class="material-icons" role="presentation">add</i>
         <span class="visuallyhidden">Add</span>
       </a>
@@ -61,17 +61,17 @@
       <div class="mdl-list__item">
         <span class="mdl-list__item-primary-content mdl-layout-title">Relatórios</span>
         <span class="mdl-list__item-secondary-action">
-          <button class="user-session mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" rel="spreadSheetCreate" type="button" href="/spreadsheets">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" rel="spreadSheet" type="button" href="/spreadsheets">
             Criar
           </button>
         </span>
       </div>
-     {{#each spreadsheets}}
+      {{#each spreadsheets}}
       <div class="mdl-list__item">
         <a class="mdl-list__item-primary-content" href="https://docs.google.com/spreadsheets/d/{{id}}/edit" target="_blank">{{name}}
         </a>
         <span class="mdl-list__item-secondary-action">
-          <button class="user-session mdl-button mdl-js-button mdl-button--raised mdl-button--fab mdl-js-ripple-effect" rel="spreadSheetDelete" data-spreadsheetid="{{id}}" type="button" href="/spreadsheets/{{id}}/delete">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--fab mdl-js-ripple-effect" rel="spreadSheet" data-spreadsheetid="{{id}}" type="button" href="/spreadsheets/{{id}}/delete">
             <i class="material-icons">clear</i>
             <span class="visuallyhidden">Remover</span>
           </button>

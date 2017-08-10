@@ -17,7 +17,6 @@ const MSG_AUTH_NEEEDED = "É necessário estar logado.";
 const MSG_FILE_NOT_FOUND = "Arquivo não encontrado: ";
 const oauth2 = require('./lib/oauth2');
 
-var tolkien;
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
 router.use(oauth2.template);
@@ -33,15 +32,10 @@ router.get('/oktaLogin', function(req, res, next) {
   res.render('oktaLogin')
 });
 
-router.get('/orders', function(req, res, next) {
+router.get('/orders', oauth2.required, function(req, res, next) {
   var options = {
     order: [sortCriteriaList]
   };
-  
-  tolkien = 'Bearer ';
-  if(res.locals.profile){
-    tolkien = tolkien + res.locals.profile.tolkien;
-  }
   Sequelize.Promise.all([
     models.Order.findAll(options),
     models.Spreadsheet.findAll(options)
@@ -54,16 +48,16 @@ router.get('/orders', function(req, res, next) {
     });
   });
 
-
-router.get('/orders/create', function(req, res, next) {
+router.get('/orders/create', oauth2.required, function(req, res, next) {
   res.render('orders_upsert');
 });
 
-router.get('/orders/edit/:id', function(req, res, next) {
+router.get('/orders/edit/:id', oauth2.required, function(req, res, next) {
   models.Order.findById(req.params.id).then(function(order) {
     if (order) {
       res.render('orders_upsert', {
-        order: order
+        order: order,
+        locals : res.locals
       });
     } else {
       next(new Error(MSG_ORDER_NOT_FOUND + req.params.id));
@@ -71,7 +65,7 @@ router.get('/orders/edit/:id', function(req, res, next) {
   });
 });
 
-router.get('/orders/delete/:id', function(req, res, next) {
+router.get('/orders/delete/:id', oauth2.required, function(req, res, next) {
   models.Order.findById(req.params.id)
   .then(function(order) {
     if (!order) {
@@ -86,7 +80,7 @@ router.get('/orders/delete/:id', function(req, res, next) {
   });
 });
 
-router.get('/orders/close/:id', function(req, res, next) {
+router.get('/orders/close/:id', oauth2.required, function(req, res, next) {
   models.Order.findById(req.params.id)
   .then(function(order) {
     if (!order) {
@@ -102,17 +96,17 @@ router.get('/orders/close/:id', function(req, res, next) {
   });
 });
 
-router.post('/orders/upsert', function(req, res, next) {
+router.post('/orders/upsert', oauth2.required, function(req, res, next) {
   models.Order.upsert(req.body).then(function() {
-    updateAllSpreadsheets(req,next);
+    updateAllSpreadsheets(req,res, next);
     res.redirect('/orders');
   }, function(err) {
     next(err);
   });
 });
 
-router.post('/spreadsheets', function(req, res, next) {
-  var helper = getSheetsHelper(req,next);
+router.post('/spreadsheets', oauth2.required, function(req, res, next) {
+  var helper = getSheetsHelper(req,res,next);
   var title = reportNamePreffix + new Date().toLocaleTimeString();
   helper.createSpreadsheet(title, function(err, spreadsheet) {
     if (err) {
@@ -130,22 +124,23 @@ router.post('/spreadsheets', function(req, res, next) {
   });
 });
 
-function getATolkien(request, next){
-  // var auth = request.get('Authorization');
-  var auth = tolkien;
-  if (!auth) {
+function getATolkien(req, res, next){
+  var auth;
+  if(res.locals.profile){
+    auth = 'Bearer ' + res.locals.profile.tolkien;
+  }else{
     return next(Error(MSG_AUTH_NEEEDED));
   }
   return auth.split(' ')[1];
 }
 
-function getSheetsHelper(request,next){
-  var accessToken = getATolkien(request,next);
+function getSheetsHelper(req, res, next){
+  var accessToken = getATolkien(req, res, next);
   return new SheetsHelper(accessToken);
 }
 
-function updateAllSpreadsheets(request,next){
-  var sheetsHelper  = getSheetsHelper(request,next);
+function updateAllSpreadsheets(req, res, next){
+  var sheetsHelper  = getSheetsHelper(req, res, next);
   Sequelize.Promise.all([models.Spreadsheet.findAll(), models.Order.findAll()]).then(function(results) {
     var spreadSheetsList = results[0];
     var orders = results[1];
@@ -169,7 +164,7 @@ function updateSpreadsheet(spreadSheet, sheetsHelper) {
   });
 }
 
-router.post('/spreadsheets/:id/delete', function(req, res, next) {
+router.post('/spreadsheets/:id/delete', oauth2.required, function(req, res, next) {
   models.Spreadsheet.findById(req.params.id)
   .then(function(result) {
     if (!result) {

@@ -64,12 +64,12 @@
           <i class="email">{{locals.profile.email}}</i>
         </div>
         <div id="signOut" display="visible" >
-          <a href="{{locals.logout}}" class="logout mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" onclick="signOut();" >Sign out</a>
+          <a href="{{locals.logout}}" class="mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" >Sign out</a>
         </div>
 
         {{else}}
         <div id="gSignInWrapper" class=""> Sign in with:
-          <a id="googleSignin" class="google-signin login mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" href={{locals.login}} >
+          <a id="googleSignin" class="google-signin login  mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" href={{locals.login}} >
            <img class="google-signin-icon " src='/img/g-logo.png' ></img>
            <span class="google-signin-text ">Google</span>
          </a>

@@ -19,9 +19,6 @@
 
 // Bind handlers when the page loads.
 var profileDiv = "#profile"
-var signoutButton = document.getElementById('signOut');
-var GoogleAuthTkn;
-
 var MSG_USER_SIGNOUT = "Usuário Saiu !";
 var MSG_SHEET_UPDATED = "Relatórios Atualizados";
 var MSG_SHEET_CREATED = "Relatório Criado";
@@ -31,35 +28,6 @@ var msgDict = {
   'spreadSheetCreate' : MSG_SHEET_CREATED,
   'spreadSheetSync'   : MSG_SHEET_UPDATED
 };
-
-// var orgUrl = "https://dev-525342.oktapreview.com";
-// var redirectUrl = 'https://ordersplat.herokuapp.com/orders';
-// var oktaSignIn = new OktaSignIn({baseUrl: orgUrl});
-// var oktaSigninEl = "#okta-login-container";
-
-// $(oktaSigninEl).ready(function() {
-//   oktaSignIn.renderEl(
-//     { el: oktaSigninEl },
-//     function (res) {
-//       if (res.status === 'SUCCESS') { 
-//        console.log("Success");
-//        res.session.setCookieAndRedirect(redirectUrl); 
-//      }
-//    }
-//    );
-// });
-
-function handleSignoutClick(event) {
-  gapi.auth2.getAuthInstance().signOut();
-}
-
-$(  function() {
-  $('a.mdl-button').click(function() {
-    setSpinnerActive(true);
-  });
-}
-
-);
 
 function setSpinnerActive(isActive) {
   if (isActive) {
@@ -84,53 +52,29 @@ function showMessage(message) {
   });
 }
 
-function onSignIn(user) {
-  var profile = user.getBasicProfile();
-  $(profileDiv + ' .name').text(profile.getName());
-  $(profileDiv + ' .email').text(profile.getEmail());
-  // The ID token you need to pass to your backend:
-  GoogleAuthTkn = user.getAuthResponse().id_token;
-  
-  signoutButton.style.visibility = 'visible';
-}
-
-
-function signOut() {
-
- // console.log(MSG_USER_SIGNOUT);
- // signoutButton.style.visibility = 'hidden';
- // $( profileDiv ).load(window.location.href + " " + profileDiv );
-
-}
 // Sending User Session to the server
 $(function() {
-  $('.user-session').click(function() {
-    console.log("user-session !!!");
+  $('button[rel="spreadSheet"]').click(function() {
     var url = $(this).attr('href');
     var relatedElem = $(this).attr('rel');
     var method = 'POST';
-    if ($(this).closest('a'))
-      makeRequest('POST', url, function(err, spreadsheet) {
-        if (err) return showError(err);
-        window.location.reload();
-        if(!msgDict[relatedElem]){showMessage(msgDict[relatedElem]);}
-      });
+
+    makeRequest(method, url, function(err, spreadsheet) {
+      if (err) return showError(err);
+      window.location.reload();
+      if(!msgDict[relatedElem]){showMessage(msgDict[relatedElem]);}
+    });
+  });
+
+  $('a.mdl-button').click(function() {
+    setSpinnerActive(true);
   });
 });
 
 function makeRequest(method, url, callback) {
-  // var auth = gapi.auth2.getAuthInstance();
-  // if (!auth.isSignedIn.get()) {
-  //   return callback(new Error('Signin required.'));
-  // }
-  // var accessToken = auth.currentUser.get().getAuthResponse().access_token;
   setSpinnerActive(true);
   $.ajax(url, {
-    method: method,
-    headers: 
-    {
-      // 'Authorization': 'Bearer ' + accessToken
-    }
+    method: method, headers: {}
     ,success: function(response) {
       setSpinnerActive(false);
       return callback(null, response);
@@ -141,5 +85,3 @@ function makeRequest(method, url, callback) {
     }
   });
 }
-
-//
