@@ -83,11 +83,12 @@ span.google-signin-text {
   vertical-align: middle;
 }
 
-/*#scroll-tab-Pedidos .mdl-button--fab {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  z-index: 999;
+/*
+#scroll-tab-Pedidos .mdl-button--fab {
+position: absolute;
+top: -20px;
+right: -20px;
+z-index: 999;
 }*/
 
 #adicPedido {
@@ -99,3 +100,37 @@ span.google-signin-text {
   margin-bottom: 40px;
   z-index: 999  ;
 }
+
+.mdl-demo .mdl-layout__tab-bar-button {
+  display: none;
+}
+.mdl-demo .mdl-layout.is-small-screen .mdl-layout__tab-bar .mdl-button {
+  display: none;
+}
+.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar,
+.mdl-demo .mdl-layout:not(.is-small-screen) .mdl-layout__tab-bar-container {
+  overflow: visible;
+}
+.mdl-demo .mdl-layout__tab-bar-container {
+  height: 64px;
+}
+.mdl-demo .mdl-layout__tab-bar {
+  padding: 0;
+  padding-left: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
+  height: 64px;
+  line-height: 64px;
+}
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
+  background-color: white;
+  height: 4px;
+}
+
+/********************* CENTER **************/
+
+
+/********************* CENTER **************/
