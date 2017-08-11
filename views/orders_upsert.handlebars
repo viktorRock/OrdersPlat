@@ -51,9 +51,22 @@
 
         {{#if order}}
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label block">
-          <input class="mdl-textfield__input" type="text" pattern="PENDENTE|PROCESSANDO|ENTREGUE" name="status" value="{{order.status}}">
-          <label class="mdl-textfield__label" for="sample1">Status...</label>
-          <span class="mdl-textfield__error">Precisar ser um dos valores a seguir PENDENTE, PROCESSANDO, or ENTREGUE</span>
+
+
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-1">
+            <input type="radio" id="status-1" class="mdl-radio__button" name="status" value="ENTREGUE" checked>
+            <span class="mdl-radio__label">Entregue</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-2">
+            <input type="radio" id="status-2" class="mdl-radio__button" name="status" value="PENDENTE">
+            <span class="mdl-radio__label">Penente</span>
+          </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="status-3">
+            <input type="radio" id="status-3" class="mdl-radio__button" name="status" value="PROCESSANDO">
+            <span class="mdl-radio__label">Processando</span>
+          </label>
+
+
         </div>
         {{/if}}
       </div>

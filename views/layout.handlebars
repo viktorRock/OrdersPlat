@@ -23,7 +23,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"> -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#3372DF">
   <link rel="shortcut icon" href="/favicon.ico" />
   <title>Customer Order System</title>
 
@@ -47,14 +61,12 @@
 </head>
 <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+    <header id="topHeader" class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
       <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
       <div class="mdl-layout__header-row">
         <h3><a href="/">Quites !</a></h3>
         <div class="mdl-layout-spacer"></div>
         <div id="spinner" class="mdl-spinner mdl-js-spinner"></div>
-        
-
         {{#if locals.profile}}
         <div>
           <img class="image mdl-button--fab" src={{locals.profile.image}}></img>
@@ -64,12 +76,11 @@
           <i class="email">{{locals.profile.email}}</i>
         </div>
         <div id="signOut" display="visible" >
-          <a href="{{locals.logout}}" class="mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" >Sign out</a>
+          <a href="{{locals.logout}}" class="mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised mdl-color-text--accent-contrast" >Sign out</a>
         </div>
-
         {{else}}
         <div id="gSignInWrapper" class=""> Sign in with:
-          <a id="googleSignin" class="google-signin login  mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised" href={{locals.login}} >
+          <a id="googleSignin" class="google-signin login  mdl-button mdl-js-button mdl-js-ripple-effect mdl-shadow--4dp mdl-color--accent mdl-button--raised" href={{locals.login}} >
            <img class="google-signin-icon " src='/img/g-logo.png' ></img>
            <span class="google-signin-text ">Google</span>
          </a>
@@ -77,9 +88,33 @@
        {{/if}}
      </div>
      <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
+     <!-- Tabs -->
+     <div id="tabs" class="mdl-layout__tab-bar mdl-js-ripple-effect ">
+       <a href="#scroll-tab-Home"    class="mdl-layout__tab">Home</a>
+       <a href="#scroll-tab-Pedidos" class="mdl-layout__tab is-active">Pedidos</a>
+       <a href="#scroll-tab-Reports" class="mdl-layout__tab">Relatórios</a>
+     </div>
    </header>
-   <main class="mdl-layout__content">
+   <!-- <div class="mdl-layout__drawer">
+     <span class="mdl-layout-title">Menu</span>
+   </div> -->
+   <main class="mdl-layout__content page-content">
     {{{body}}}
+    <footer class="demo-footer mdl-mini-footer">
+      <div class="mdl-mini-footer--left-section">
+        <ul class="mdl-mini-footer--link-list">
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Privacy and Terms</a></li>
+          <li><a href="#">User Agreement</a></li>
+        </ul>
+      </div>
+      <div class="mdl-mega-footer--right-section">
+        <a class="mdl-typography--font-light" href="#topHeader">
+          Voltar ao Topo
+          <i class="material-icons">expand_less</i>
+        </a>
+      </div>
+    </footer>
   </main>
   <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text"></div>

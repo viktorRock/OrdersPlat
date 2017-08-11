@@ -45,12 +45,6 @@ h3 a {
 .order-details th {
   text-align: right;
 }
-#orders .mdl-button--fab {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  z-index: 999;
-}
 
 .mdl-button {
   text-transform: none;
@@ -87,4 +81,21 @@ span.google-signin-icon {
 span.google-signin-text {
   display: inline-block;
   vertical-align: middle;
+}
+
+/*#scroll-tab-Pedidos .mdl-button--fab {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 999;
+}*/
+
+#adicPedido {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 999  ;
 }
