@@ -37,6 +37,6 @@
   "start_url": "/orders?hs=true",
   "display": "standalone",
   "background_color": "#000066",
-  "theme_color": "#059ACC",
+  "theme_color": "#673Ab7",
   "orientation": "portrait"
 }
