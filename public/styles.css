@@ -31,9 +31,16 @@ h3 a {
   text-decoration: none;
 }
 
+h4 a {
+  color: white;
+  text-decoration: none;
+}
 
 .mdl-layout__header-row {
-  padding: 0 12px 0 21px;
+  padding: 0 12px 0 36px;
+}
+.mdl-layout__header {
+  padding-top: 4px;
 }
 
 #signOut{
