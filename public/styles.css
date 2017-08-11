@@ -1,4 +1,4 @@
-/*
+
 Copyright 2016 Google, Inc.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
@@ -30,8 +30,26 @@ h3 a {
   color: white;
   text-decoration: none;
 }
+
+
 .mdl-layout__header-row {
-  padding: 0 12px 0 24px;
+  padding: 0 12px 0 12px;
+}
+
+#signOut{
+  margin: 0 8px;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .mdl-layout__header-row {
+    padding: 0 12px 0 36px;
+  }
+
+  #signOut{
+    margin: 0 20px;
+  }
+
 }
 .relative {
   position: relative;
@@ -61,9 +79,6 @@ h3 a {
 
 }
 
-#signOut{
-  margin: 0 20px;
-}
 
 #defaultForm{
   text-align: center;
@@ -133,13 +148,13 @@ z-index: 999;
 
 /********************* CENTER **************/
 .ordersPlat-max-width {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
 }
 /*.portfolio-header {
   position: relative;
   background-image: url(images/header-bg.jpg);
-}*/
+  }*/
 /*
 .portfolio-header .mdl-layout__header-row {
   padding: 0;
@@ -154,5 +169,5 @@ z-index: 999;
 
 .is-compact .mdl-layout__title span {
   display: none;
-}*/
-/********************* CENTER **************/
+  }*/
+/********************* CENTER *************
