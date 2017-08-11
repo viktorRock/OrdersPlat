@@ -45,7 +45,9 @@ h3 a {
 .order-details th {
   text-align: right;
 }
-
+.order-actions {
+  text-align: center;
+}
 .mdl-button {
   text-transform: none;
   padding: 0 4px;
@@ -61,7 +63,6 @@ h3 a {
 
 #signOut{
   margin: 0 20px;
-  /*visibility: hidden;*/
 }
 
 #defaultForm{
@@ -131,6 +132,27 @@ z-index: 999;
 }
 
 /********************* CENTER **************/
+.ordersPlat-max-width {
+  max-width: 900px;
+  margin: auto;
+}
+/*.portfolio-header {
+  position: relative;
+  background-image: url(images/header-bg.jpg);
+}*/
+/*
+.portfolio-header .mdl-layout__header-row {
+  padding: 0;
+  justify-content: center;
+}
 
+.mdl-layout__title {
+  font-size: 14px;
+  text-align: center;
+  font-weight: 300;
+}
 
+.is-compact .mdl-layout__title span {
+  display: none;
+}*/
 /********************* CENTER **************/

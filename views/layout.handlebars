@@ -24,22 +24,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <!-- manifest and meta theme color -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6600ff">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="/images/icons/icon-144.png">
+  <meta name="msapplication-TileColor" content="#6600ff">
+  <link rel="shortcut icon" href="/images/icons/favicon.ico" />
+  <title>Customer Order System</title>
 
   <!-- Add to homescreen for Chrome on Android -->
+  <meta name="Pedido Facil" content="Pedido Facil">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+  <link rel="icon" sizes="192x192" href="/images/icons/icon-192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-  <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
-
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#3372DF">
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <title>Customer Order System</title>
+  <meta name="apple-mobile-web-app-title" content="Pedido Facil">
+  <link rel="apple-touch-icon-precomposed" href="/images/icons/icon192.png">
+  <!-- Add to home screen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Pedido Facil">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/icons/apple-60.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/images/icons/apple-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-180.png">
 
   <!-- Material Design Lite -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-blue.min.css">
@@ -60,19 +74,23 @@
 
 </head>
 <!-- section--center -->
-<body class="mdl-demo mdl-base mdl-color--grey-100 mdl-color-text--grey-700 ">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header has-tabs ">
-  <header id="topHeader" class=" mdl-layout__header mdl-layout__header--scroll mdl-color--primary ">
+<body class="mdl-demo mdl-base mdl-layout__container">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
+    <header id="topHeader" class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary ">
       <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
       <div class="mdl-layout__header-row">
-        <h3><a href="/">Quites !</a></h3>
-        <div class="mdl-layout-spacer"></div>
+        <!-- <div class="mdl-textfield mdl-js-textfield"> -->
+        <h3 id="titleHeader"><a href="/">PedidoFacil</a></h3>
+        <!-- <label class=" mdl-layout--large-screen-only  mdl-textfield__label mdl-color-text--accent-contrast" for="titleHeader">A  sua plataforma de serviços -->
+        <!-- </label> -->
+        <!-- </div> -->
+        <div class="mdl-layout-spacer "></div>
         <div id="spinner" class="mdl-spinner mdl-js-spinner"></div>
         {{#if locals.profile}}
         <div>
           <img class="image mdl-button--fab" src={{locals.profile.image}}></img>
         </div>
-        <div id="profile"> 
+        <div id="profile" class="mdl-layout--large-screen-only"> 
           <b class="name">{{locals.profile.name}}</b><br/>
           <i class="email">{{locals.profile.email}}</i>
         </div>
@@ -89,11 +107,11 @@
        {{/if}}
      </div>
      <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
-       <div id="tabs" class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-         <a href="#scroll-tab-Home"    class="mdl-layout__tab">Home</a>
-         <a href="#scroll-tab-Pedidos" class="mdl-layout__tab is-active">Pedidos</a>
-         <a href="#scroll-tab-Reports" class="mdl-layout__tab">Relatórios</a>
-       </div>
+     <div id="tabs" class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+       <a href="#scroll-tab-Home"    class="mdl-layout__tab">Home</a>
+       <a href="#scroll-tab-Pedidos" class="mdl-layout__tab is-active">Pedidos</a>
+       <a href="#scroll-tab-Reports" class="mdl-layout__tab">Relatórios</a>
+     </div>
    </header>
    <!-- <div class="mdl-layout__drawer">
      <span class="mdl-layout-title">Menu</span>
@@ -107,13 +125,21 @@
           <li><a href="#">Privacy and Terms</a></li>
           <li><a href="#">User Agreement</a></li>
         </ul>
+        <div>Tab/Shortcut Icon made by 
+          <a href="https://www.flaticon.com/authors/madebyoliver" title="Madebyoliver">Madebyoliver</a> 
+          from 
+          <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> 
+          is licensed by 
+          <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+        </div>
       </div>
       <div class="mdl-mega-footer--right-section">
-        <a class="mdl-typography--font-light" href="#topHeader">
+        <a class="mdl-layout--large-screen-only  mdl-typography--font-light" href="#topHeader">
           Voltar ao Topo
           <i class="material-icons">expand_less</i>
         </a>
       </div>
+
     </footer>
   </main>
   <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
