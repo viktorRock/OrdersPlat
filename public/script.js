@@ -89,6 +89,10 @@ function makeRequest(method, url, callback) {
 var uolRequestURL = "https://ws.pagseguro.uol.com.br/v2/pre-approvals/request?";
 
 function uolPayment(paymentCode){
+/*
+<script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js">
+</script>
+*/
 
   PagSeguroLightbox({
     code: paymentCode
