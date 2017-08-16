@@ -58,7 +58,26 @@
     </div>
     {{/each}}
 
+    {{#unless orders}}
+    <div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Pedido #999</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+      <table class="order-details " disabled>
+          <tr><th>Cliente</th><td>João</td></tr>
+          <tr><th>Produto</th><td>Produto 1</td></tr>
+          <tr><th>Quantidade</th><td>1</td></tr>
+          <tr><th>Preço Unitário (R$)</th><td>0,00</td></tr>
+          <tr><th>Status</th><td>ENTREGUE</td></tr>
+        </ul>
+      </table>
+    </div>
   </div>
+  {{/unless}}
+
+
+</div>
 </section>
 <section id="scroll-tab-Reports" class="ordersPlat-max-width mdl-cell mdl-cell--4-col relative mdl-layout__tab-panel">
   <div class="mdl-list">
