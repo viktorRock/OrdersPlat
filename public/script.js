@@ -85,3 +85,19 @@ function makeRequest(method, url, callback) {
     }
   });
 }
+
+var uolRequestURL = "https://ws.pagseguro.uol.com.br/v2/pre-approvals/request?";
+
+function uolPayment(paymentCode){
+
+  PagSeguroLightbox({
+    code: paymentCode
+    }, {
+    success : function(transactionCode) {
+        alert("success - " + transactionCode);
+    },
+    abort : function() {
+        alert("abort");
+    }
+});
+}
