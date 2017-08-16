@@ -45,6 +45,15 @@ h4 a {
   margin: 0 8px;
 }
 
+#adicPedido {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 999  ;
+}
 
 @media only screen and (min-width: 768px) {
   .mdl-layout__header-row {
@@ -54,11 +63,6 @@ h4 a {
   #signOut{
     margin: 0 20px;
   }
-
- /* .mdl-layout__tab-bar{
-   .ordersPlat-max-width;
-  }*/
-
 }
 .relative {
   position: relative;
@@ -116,15 +120,7 @@ right: -20px;
 z-index: 999;
 }*/
 
-#adicPedido {
-  position: fixed;
-  display: block;
-  right: 0;
-  bottom: 0;
-  margin-right: 40px;
-  margin-bottom: 40px;
-  z-index: 999  ;
-}
+
 
 .mdl-demo .mdl-layout__tab-bar-button {
   display: none;

@@ -64,7 +64,7 @@
         <h2 class="mdl-card__title-text">Pedido #999</h2>
       </div>
       <div class="mdl-card__supporting-text">
-      <table class="order-details " disabled>
+        <table class="order-details " disabled>
           <tr><th>Cliente</th><td>João</td></tr>
           <tr><th>Produto</th><td>Produto 1</td></tr>
           <tr><th>Quantidade</th><td>1</td></tr>
@@ -72,6 +72,20 @@
           <tr><th>Status</th><td>ENTREGUE</td></tr>
         </ul>
       </table>
+    </div>
+    <div class="mdl-card__actions order-actions">
+      <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/orders/close/{{id}}">Finalizar
+        <i class="material-icons">done</i>
+      </a>
+      <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/edit/{{id}}">Editar
+        <i class="material-icons">edit</i>
+      </a>
+      <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}">Deletar
+        <i class="material-icons">delete</i>
+      </a>
+      <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="https://pag.ae/bcmHYXC">Pagar
+        <i class="material-icons">payment</i>
+      </a>
     </div>
   </div>
   {{/unless}}
