@@ -1,4 +1,4 @@
-
+/*
 Copyright 2016 Google, Inc.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
@@ -160,27 +160,7 @@ z-index: 999;
 /********************* CENTER **************/
 
 
-.ordersPlat-max-width {
+.max-width {
   max-width: 1000px;
   margin: auto;
 }
-/*.portfolio-header {
-  position: relative;
-  background-image: url(images/header-bg.jpg);
-  }*/
-/*
-.portfolio-header .mdl-layout__header-row {
-  padding: 0;
-  justify-content: center;
-}
-
-.mdl-layout__title {
-  font-size: 14px;
-  text-align: center;
-  font-weight: 300;
-}
-
-.is-compact .mdl-layout__title span {
-  display: none;
-  }*/
-/********************* CENTER *************

@@ -36,10 +36,13 @@ router.get('/orders', oauth2.required, function(req, res, next) {
   var options = {
     order: [sortCriteriaList]
   };
+
   Sequelize.Promise.all([
     models.Order.findAll(options),
     models.Spreadsheet.findAll(options)
     ]).then(function(results) {
+      console.log("results[0] = ");
+      console.log(results[0]);
       res.render('orders', {
         orders: results[0],
         spreadsheets: results[1],

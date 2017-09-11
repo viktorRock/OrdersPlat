@@ -53,7 +53,7 @@ app.engine('handlebars', expresshandlebars({
   layoutsDir: 'views',
   defaultLayout: 'layout'
 }));
-app.set('view engine', 'handlebars');   
+app.set('view engine', 'handlebars');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
