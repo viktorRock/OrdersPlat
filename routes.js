@@ -28,6 +28,14 @@ router.get('/', function(req, res, next) {
   res.redirect('/orders');
 });
 
+// TODO: Show spreadsheets on the main page.
+router.get('/index', function(req, res, next) {
+  res.render('/index', {
+    locals : res.locals
+  });
+});
+
+
 router.get('/oktaLogin', function(req, res, next) {
   res.render('oktaLogin')
 });
@@ -52,7 +60,9 @@ router.get('/orders', oauth2.required, function(req, res, next) {
   });
 
 router.get('/orders/create', oauth2.required, function(req, res, next) {
-  res.render('orders_upsert');
+  res.render('orders_upsert', {
+    locals : res.locals
+  });
 });
 
 router.get('/orders/edit/:id', oauth2.required, function(req, res, next) {
