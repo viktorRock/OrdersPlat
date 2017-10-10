@@ -30,9 +30,10 @@ router.get('/', function(req, res, next) {
 
 // TODO: Show spreadsheets on the main page.
 router.get('/index', function(req, res, next) {
-  res.render('/index', {
-    locals : res.locals
-  });
+  res.render('index');
+  // res.render('/index', {
+  //   locals : res.locals
+  // });
 });
 
 
