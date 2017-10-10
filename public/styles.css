@@ -16,6 +16,21 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
+/*.mdl-card__supporting-text {
+  padding: 16px 0;
+}
+*/
+
+.mdl-card__title {
+  padding: 8px;
+}
+.radio-update{
+  display: inline-grid;
+  text-align: -webkit-auto;
+  width: auto;
+  padding: 10px 0;
+}
+
 .mdl-card {
   border-radius: 5px;
 }
@@ -27,7 +42,7 @@ html, body {
 }
 main {
   padding: 8px;
-  padding-top: 24px;
+  padding-top: 16px;
 }
 h3 a {
   color: white;
@@ -59,6 +74,10 @@ h4 a {
 }
 
 @media only screen and (min-width: 768px) {
+  /*.mdl-card__supporting-text {
+    padding: 24px 0;
+  }*/
+
   .mdl-layout__header-row {
     padding: 0 12px 0 36px;
   }
