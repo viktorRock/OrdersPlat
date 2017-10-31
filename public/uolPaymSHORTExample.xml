@@ -1,52 +1,14 @@
-<?xml version="1.0"  Content-Type="application/xml" charset="ISO-8859-1" ?>
+<?xml version="1.0"?>
 <checkout>
-  <sender> <!-- OPTIONAL -->
-    <name>Jose Comprador</name> <!-- OPTIONAL -->
-    <email>comprador@uol.com.br</email> 
-    <phone> <!-- OPTIONAL -->
-      <areaCode>99</areaCode> 
-      <number>99999999</number>
-    </phone>
-    <ip>1.1.1.1</ip>
-    <documents><!-- OPTIONAL -->
-      <document>
-        <type>CPF</type>
-        <value>11475714734</value>
-      </document>
-    </documents>
-  </sender>   
   <currency>BRL</currency>
-  <items> <!-- OPTIONAL -->
+  <items>
     <item>
       <id>0001</id>
-      <description>Produto PagSeguroI</description>
-      <amount>99999.99</amount>
+      <description>Banana</description>
+      <amount>1.99</amount>
       <quantity>1</quantity>
-      <weight>10</weight> <!-- OPTIONAL -->
-      <shippingCost>1.00</shippingCost> <!-- OPTIONAL -->
+      <weight>10</weight>
+      <shippingCost>1.00</shippingCost>
     </item>
-  </items> 
-  <redirectURL>http://lojamodelo.com.br/return.html</redirectURL> <!-- OPTIONAL -->
-  <extraAmount>10.00</extraAmount> <!-- OPTIONAL -->
-  <reference>REF1234</reference> <!-- OPTIONAL -->
-  <shipping> <!-- OPTIONAL -->
-    <address> <!-- OPTIONAL -->
-      <street>Av. PagSeguro</street> <!-- OPTIONAL -->
-      <number>9999</number><!-- OPTIONAL -->
-      <complement>99o andar</complement><!-- OPTIONAL -->
-      <district>Jardim Internet</district><!-- OPTIONAL -->
-      <city>Cidade Exemplo</city><!-- OPTIONAL -->
-      <state>SP</state><!-- OPTIONAL -->
-      <country>BRA</country><!-- OPTIONAL -->
-      <postalCode>99999999</postalCode><!-- OPTIONAL -->
-    </address><!-- OPTIONAL -->
-    <type>1</type> <!-- OPTIONAL -->
-    <cost>1.00</cost> <!-- OPTIONAL -->
-    <addressRequired>true</addressRequired> <!-- OPTIONAL -->
-  </shipping> <!-- OPTIONAL -->
-  <maxAge>999999999</maxAge> <!-- OPTIONAL -->
-  <maxUses>999</maxUses>  <!-- OPTIONAL -->
-  <receiver> <!-- OPTIONAL -->
-    <email>suporte@lojamodelo.com.br</email> <!-- OPTIONAL -->
-  </receiver> <!-- OPTIONAL -->
+  </items>
 </checkout>

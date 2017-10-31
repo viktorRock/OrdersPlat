@@ -25,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
     productCode: {type: DataTypes.STRING, allowNull: false},
     unitsOrdered: {type: DataTypes.INTEGER, allowNull: false},
     unitPrice: {type: DataTypes.FLOAT, allowNull: false},
-    status: {type: DataTypes.STRING, allowNull: false, defaultValue: 'PENDENTE'}
+    status: {type: DataTypes.STRING, allowNull: false, defaultValue: 'PENDENTE'},
+    ip: {type: DataTypes.STRING, allowNull: false, defaultValue: '127.0.0.1'}
   });
 
   return Order;

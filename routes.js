@@ -16,6 +16,7 @@ const MSG_ORDER_NOT_FOUND = "Pedido não encontrado: ";
 const MSG_AUTH_NEEEDED = "É necessário estar logado.";
 const MSG_FILE_NOT_FOUND = "Arquivo não encontrado: ";
 const oauth2 = require('./lib/oauth2');
+var pagSeguro = require('./lib/pagSeg');
 
 // Use the oauth middleware to automatically get the user's profile
 // information and expose login/logout URLs to templates.
@@ -50,13 +51,19 @@ router.get('/orders', oauth2.required, function(req, res, next) {
     models.Order.findAll(options),
     models.Spreadsheet.findAll(options)
     ]).then(function(results) {
-      // console.log("results[0] = ");
-      // console.log(results[0]);
-      res.render('orders', {
-        orders: results[0],
-        spreadsheets: results[1],
-        locals : res.locals
+
+      // results[0].forEach(getPagSegURL);
+      getPagSegURLList(results[0], function (){
+        results[0][0].pagSegCode = '48570D11E5E5ED6AA4747FB6567313E2';
+        res.render('orders', {
+          orders: results[0],
+          spreadsheets: results[1],
+          locals : res.locals
+        });  
+        console.log(results[0]);
       });
+      
+      
     });
   });
 
@@ -111,6 +118,8 @@ router.get('/orders/close/:id', oauth2.required, function(req, res, next) {
 });
 
 router.post('/orders/upsert', oauth2.required, function(req, res, next) {
+  console.log('/orders/upsert ******************');
+  console.log(req.body);
   models.Order.upsert(req.body).then(function() {
     updateAllSpreadsheets(req,res, next);
     res.redirect('/orders');
@@ -137,6 +146,58 @@ router.post('/spreadsheets', oauth2.required, function(req, res, next) {
    });
   });
 });
+
+router.post('/spreadsheets/:id/delete', oauth2.required, function(req, res, next) {
+  models.Spreadsheet.findById(req.params.id)
+  .then(function(result) {
+    if (!result) {
+      throw new Error(MSG_FILE_NOT_FOUND + req.params.id);
+    }
+    return result.destroy();
+  })
+  .then(function() {
+    res.redirect('/orders');
+  }, function(err) {
+    next(err);
+  });
+});
+
+function getPagSegURLList(ordersList, callback){
+  ordersList[1]="asdasdasd";
+  for(let order of ordersList ){
+    getPagSegURL(order, function (){
+      console.log("output = %s",order.pagSegCode);
+    });
+  }
+  callback();
+}
+
+function getPagSegURL(order, callback){
+  var pagSegJSON = orderTopagSeg(order);
+  pagSeguro.pay(pagSegJSON,  function (output){
+    order.pagSegCode = output.checkout.code;
+    
+    callback();
+  });
+}
+
+function orderTopagSeg(order){
+  var output = {
+    "checkout": {
+      // "sender" : { "name": order.customerName,"ip" : order.ip },
+      "currency": "BRL",
+      "items": {
+        "item": {
+          "id": order.id,
+          "description": order.productCode,
+          "amount": order.unitPrice.toFixed(2),
+          "quantity": order.unitsOrdered
+        }
+      }
+    }
+  }
+  return output;
+}
 
 function getATolkien(req, res, next){
   var auth;
@@ -177,20 +238,5 @@ function updateSpreadsheet(spreadSheet, sheetsHelper) {
     });
   });
 }
-
-router.post('/spreadsheets/:id/delete', oauth2.required, function(req, res, next) {
-  models.Spreadsheet.findById(req.params.id)
-  .then(function(result) {
-    if (!result) {
-      throw new Error(MSG_FILE_NOT_FOUND + req.params.id);
-    }
-    return result.destroy();
-  })
-  .then(function() {
-    res.redirect('/orders');
-  }, function(err) {
-    next(err);
-  });
-});
 
 module.exports = router;

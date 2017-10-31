@@ -1,22 +1,3 @@
-/*
-  Copyright 2016 Google, Inc.
-
-  Licensed to the Apache Software Foundation (ASF) under one or more contributor
-  license agreements. See the NOTICE file distributed with this work for
-  additional information regarding copyright ownership. The ASF licenses this
-  file to you under the Apache License, Version 2.0 (the "License"); you may not
-  use this file except in compliance with the License. You may obtain a copy of
-  the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  License for the specific language governing permissions and limitations under
-  the License.
-  */
-
 // Bind handlers when the page loads.
 var profileDiv = "#profile"
 var MSG_USER_SIGNOUT = "Usuário Saiu !";
@@ -74,30 +55,36 @@ $(function() {
 function makeRequest(method, url, callback) {
   setSpinnerActive(true);
   $.ajax(url, {
-    method: method, headers: {}
-    ,success: function(response) {
+    method: method, 
+    headers: {},
+    success: function(response) {
       setSpinnerActive(false);
       return callback(null, response);
-    }
-    ,error: function(response) {
+    },
+    error: function(response) {
       setSpinnerActive(false);
       return callback(new Error(response.responseJSON.message));
     }
   });
 }
 
-var uolRequestURL = "https://ws.pagseguro.uol.com.br/v2/pre-approvals/request?";
 
-function uolPayment(paymentCode){
+function pagSeguroLightBox(paymentCode){
 
-  PagSeguroLightbox({
+  var isOpenLightbox = PagSeguroLightbox({
     code: paymentCode
-    }, {
+  }, {
     success : function(transactionCode) {
-        alert("success - " + transactionCode);
+      alert("success - " + transactionCode);
     },
     abort : function() {
-        alert("abort");
+      alert("abort");
     }
-});
+  });
+
+  // Redirecionando o cliente caso o navegador não tenha suporte ao Lightbox
+  if (!isOpenLightbox){
+    location.href="https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code="+code;
+  }
+
 }
