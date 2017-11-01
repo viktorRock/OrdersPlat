@@ -52,18 +52,11 @@ router.get('/orders', oauth2.required, function(req, res, next) {
     models.Spreadsheet.findAll(options)
     ]).then(function(results) {
 
-      // results[0].forEach(getPagSegURL);
-      getPagSegURLList(results[0], function (){
-        results[0][0].pagSegCode = '48570D11E5E5ED6AA4747FB6567313E2';
-        res.render('orders', {
-          orders: results[0],
-          spreadsheets: results[1],
-          locals : res.locals
-        });  
-        console.log(results[0]);
-      });
-      
-      
+      res.render('orders', {
+        orders: results[0],
+        spreadsheets: results[1],
+        locals : res.locals
+      });  
     });
   });
 
@@ -118,15 +111,47 @@ router.get('/orders/close/:id', oauth2.required, function(req, res, next) {
 });
 
 router.post('/orders/upsert', oauth2.required, function(req, res, next) {
+  req.body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  var options = {
+    hooks: true
+  };
+
   console.log('/orders/upsert ******************');
   console.log(req.body);
-  models.Order.upsert(req.body).then(function() {
+  models.Order.upsert(req.body, options).then(function() {
     updateAllSpreadsheets(req,res, next);
     res.redirect('/orders');
   }, function(err) {
     next(err);
   });
 });
+
+function updatePagSegURL(order){
+  var pagSegJSON = orderTopagSeg(order);
+  pagSeguro.pay(pagSegJSON,  function (output){
+    order.paymURL = output.checkout.code;
+    order.paymURLDate = output.checkout.date;
+    order.save().then(() => {});
+  });
+}
+
+function orderTopagSeg(order){
+  var output = {
+    "checkout": {
+      // "sender" : { "name": order.customerName,"ip" : order.ip },
+      "currency": "BRL",
+      "items": {
+        "item": {
+          "id": order.id,
+          "description": order.productCode,
+          "amount": order.unitPrice.toFixed(2),
+          "quantity": order.unitsOrdered
+        }
+      }
+    }
+  }
+  return output;
+}
 
 router.post('/spreadsheets', oauth2.required, function(req, res, next) {
   var helper = getSheetsHelper(req,res,next);
@@ -161,43 +186,6 @@ router.post('/spreadsheets/:id/delete', oauth2.required, function(req, res, next
     next(err);
   });
 });
-
-function getPagSegURLList(ordersList, callback){
-  ordersList[1]="asdasdasd";
-  for(let order of ordersList ){
-    getPagSegURL(order, function (){
-      console.log("output = %s",order.pagSegCode);
-    });
-  }
-  callback();
-}
-
-function getPagSegURL(order, callback){
-  var pagSegJSON = orderTopagSeg(order);
-  pagSeguro.pay(pagSegJSON,  function (output){
-    order.pagSegCode = output.checkout.code;
-    
-    callback();
-  });
-}
-
-function orderTopagSeg(order){
-  var output = {
-    "checkout": {
-      // "sender" : { "name": order.customerName,"ip" : order.ip },
-      "currency": "BRL",
-      "items": {
-        "item": {
-          "id": order.id,
-          "description": order.productCode,
-          "amount": order.unitPrice.toFixed(2),
-          "quantity": order.unitsOrdered
-        }
-      }
-    }
-  }
-  return output;
-}
 
 function getATolkien(req, res, next){
   var auth;

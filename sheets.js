@@ -289,10 +289,10 @@ function buildAddChartRequest(sheetId) {
       chart: {
         spec: {
           title: 'Revenue per Product',
-          basicChart: {
-            chartType: 'BAR',
+          pieChart: {
+            // chartType: 'PIE',
             legendPosition: 'RIGHT_LEGEND',
-            domains: [{
+            // domains: [{
               // Show a bar for each product code in the pivot table.
 
               domain: { sourceRange: { sources: [{
@@ -301,8 +301,9 @@ function buildAddChartRequest(sheetId) {
                 startColumnIndex: 0,
                 endColumnIndex: 1
               }]}}
-            }],
-            series: [{
+            // }]
+            ,
+            // series: [{
               // Set that bar's length based on the total revenue.
               series: { sourceRange: { sources: [{
                 sheetId: sheetId,
@@ -310,7 +311,7 @@ function buildAddChartRequest(sheetId) {
                 startColumnIndex: 2,
                 endColumnIndex: 3
               }]}}
-            }]
+            // }]
           }
         },
         position: {

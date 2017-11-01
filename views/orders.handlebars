@@ -32,7 +32,7 @@
           <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}">Deletar
             <i class="material-icons">delete</i>
           </a>
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="{{pagSegCode}}">Pagar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="{{paymURL}}">Pagar
             <i class="material-icons">payment</i>
           </a>
         </div>
@@ -56,16 +56,16 @@
           </table>
         </div>
         <div class="mdl-card__actions order-actions">
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/orders/close/{{id}}">Finalizar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/orders/close/{{id}}" disabled>Finalizar
             <i class="material-icons">done</i>
           </a>
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/edit/{{id}}">Editar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/edit/{{id}}" disabled>Editar
             <i class="material-icons">edit</i>
           </a>
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}">Deletar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="/orders/delete/{{id}}" disabled>Deletar
             <i class="material-icons">delete</i>
           </a>
-          <a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="https://pag.ae/bcmHYXC">Pagar
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect " href="/orders" disabled>Pagar
             <i class="material-icons">payment</i>
           </a>
         </div>
