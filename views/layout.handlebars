@@ -10,31 +10,31 @@
   <meta name="theme-color" content="#009688">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="/images/icons/icon-144.png">
+  <meta name="msapplication-TileImage" content="/assets/images/icons/icon-144.png">
   <meta name="msapplication-TileColor" content="#009688">
-  <link rel="shortcut icon" href="/images/icons/favicon.ico" />
+  <link rel="shortcut icon" href="/assets/images/icons/favicon.ico" />
   <title>Pedido Facil</title>
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="Pedido Facil" content="Pedido Facil">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" sizes="192x192" href="/images/icons/icon-192.png">
+  <link rel="icon" sizes="192x192" href="/assets/images/icons/icon-192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Pedido Facil">
-  <link rel="apple-touch-icon-precomposed" href="/images/icons/icon192.png">
+  <link rel="apple-touch-icon-precomposed" href="/assets/images/icons/icon-192.png">
   <!-- Add to home screen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Pedido Facil">
-  <link rel="apple-touch-icon" sizes="60x60" href="/images/icons/apple-60.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-76.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-120.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-152.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="/images/icons/apple-167.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-180.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/icons/apple-60.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/icons/apple-76.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/icons/apple-120.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/icons/apple-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/icons/apple-167.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-180.png">
 
   <!-- Material Design Lite -->
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-indigo.min.css">
@@ -46,14 +46,12 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
 
-  
   <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js">
   </script>
 
-
-<!-- Local Assets -->
-<link rel="stylesheet" href="/styles.css">
-<script src="/script.js"></script>
+  <!-- Local Assets -->
+  <link rel="stylesheet" href="assets/styles/styles.css">
+  <script src="assets/js/script.js"></script>
 
 </head>
 <!-- section--center -->
@@ -62,43 +60,33 @@
     <header id="topHeader" class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary ">
       <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div>
       <div class="mdl-layout__header-row top-header">
-
-        <!-- <h3 id="titleHeader"><a href="/">PedidoFacil</a></h3> -->
-
         <h3 id="titleHeader" class="mdl-layout--large-screen-only"><a href="/">PedidoFacil</a></h3>
         <h4 id="titleHeader" class="mdl-layout--small-screen-only"><a href="/">PedidoFacil</a></h4>
-
         <div class="mdl-layout--large-screen-only mdl-layout-spacer"></div>
         <div id="spinner" class="mdl-spinner mdl-js-spinner"></div>
         {{#if locals.profile}}
-        <div>
-          <img class="image mdl-button--fab mdl-js-button  mdl-button--raised" src={{locals.profile.image}}></img>
-        </div>
+        <img class="mdl-button--fab mdl-js-button mdl-button--raised" src="{{locals.profile.image}}"/>
         <div id="profile" class="mdl-layout--large-screen-only"> 
           <b class="name">{{locals.profile.name}}</b><br/>
           <i class="email">{{locals.profile.email}}</i>
         </div>
         <div id="signOut" display="visible" >
-          <a href="{{locals.logout}}" class="mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised mdl-color-text--accent-contrast" >Sign out</a>
+          <a href="{{locals.logout}}" class="mdl-button mdl-js-button mdl-js-ripple-effect  mdl-shadow--4dp mdl-color--accent mdl-button--raised mdl-color-text--accent-contrast">Sign out</a>
         </div>
         {{else}}
-        <div id="gSignInWrapper" class=""> Sign in with:
-          <a id="googleSignin" class="google-signin login  mdl-button mdl-js-button mdl-js-ripple-effect mdl-shadow--4dp mdl-color--accent mdl-button--raised" href={{locals.login}} >
-           <img class="google-signin-icon " src='/img/g-logo.png' ></img>
-           <span class="google-signin-text ">Google</span>
-         </a>
-       </div>
+        Sign in with:
+        <a href="{{locals.login}}" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-shadow--4dp mdl-color--accent mdl-button--raised">
+         <img class="google-signin-icon" src="assets/images/icons/g-logo.png"/>
+         <span class="google-signin-text ">Google</span>
+        </a>
        {{/if}}
      </div>
-     <!-- <div class="mdl-layout--large-screen-only mdl-layout__header-row"></div> -->
-     <div id="tabs" class="mdl-layout__tab-bar mdl-js-ripple-effect">
-       <a href="/index#scroll-tab-Home" class="mdl-layout__tab">Home</a>
-       <a href="/orders#scroll-tab-Pedidos" class="mdl-layout__tab ">Pedidos</a>
-       <!-- #scroll-tab-Pedidos -->
-       <a href="/reports#scroll-tab-Reports" class="mdl-layout__tab">Relatórios</a>
-       <!-- #scroll-tab-Reports -->
-     </div>
-   </header>
+     <div id="tabs" class="mdl-layout__tab-bar mdl-js-ripple-effect  mdl-layout--fixed-tabs">
+      <a href="/index#scroll-tab-home is-active" class="mdl-layout__tab">Home</a>
+      <a href="/orders" class="mdl-layout__tab ">Pedidos</a>
+      <a href="/reports#scroll-tab-Reports" class="mdl-layout__tab">Relatórios</a>
+    </div>
+  </header>
    <!-- <div class="mdl-layout__drawer">
      <span class="mdl-layout-title">Menu</span>
    </div> -->
@@ -125,7 +113,6 @@
           <i class="material-icons">expand_less</i>
         </a>
       </div>
-
     </footer>
   </main>
   <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
