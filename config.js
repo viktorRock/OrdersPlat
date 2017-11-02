@@ -37,6 +37,7 @@ nconf
     'OAUTH2_CALLBACK',
     'PAGSEG_CLIENT_EMAIL',
     'PAGSEG_CLIENT_TOKEN',
+    'PAGSEG_JS',
     'PAGSEG_URL',
     'PORT',
     'SECRET',
@@ -91,6 +92,8 @@ checkConfig('OAUTH2_CLIENT_SECRET');
 checkConfig('PAGSEG_CLIENT_EMAIL');
 checkConfig('PAGSEG_CLIENT_TOKEN');
 checkConfig('PAGSEG_URL');
+checkConfig('PAGSEG_JS');
+
 
 if (nconf.get('DATA_BACKEND') === 'cloudsql') {
   checkConfig('MYSQL_USER');

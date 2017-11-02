@@ -6,7 +6,7 @@ const models = require('./models');
 const Sequelize = require('sequelize');
 const SheetsHelper = require('./sheets');
 const extend = require('util')._extend;
-
+const config = require('./config');
 const sortCriteriaList = ['createdAt', 'DESC'];
 const reportNamePreffix = "Relatorio_";
 const OAUTH_GRANT_TYPE = "refresh_token";
@@ -56,7 +56,8 @@ router.get('/orders', oauth2.required, function(req, res, next) {
       res.render('orders', {
         orders: results[0],
         spreadsheets: results[1],
-        locals : res.locals
+        locals : res.locals,
+        paymJS : getPagSegJS()
       });  
     });
   });
@@ -228,4 +229,7 @@ function updateSpreadsheet(spreadSheet, sheetsHelper) {
   });
 }
 
+function getPagSegJS(){
+  return config.get('PAGSEG_JS');
+}
 module.exports = router;
