@@ -26,7 +26,7 @@ router.use(oauth2.template);
 
 // TODO: Show spreadsheets on the main page.
 router.get('/', function(req, res, next) {
-  res.redirect('/orders');
+  res.redirect('/index');
 });
 
 // TODO: Show spreadsheets on the main page.
@@ -37,6 +37,13 @@ router.get('/index', function(req, res, next) {
   // });
 });
 
+// TODO: Show spreadsheets on the main page.
+router.get('/reports', function(req, res, next) {
+  res.render('/reports');
+  // res.render('/index', {
+  //   locals : res.locals
+  // });
+});
 
 router.get('/oktaLogin', function(req, res, next) {
   res.render('oktaLogin')
@@ -117,7 +124,7 @@ router.post('/orders/upsert', oauth2.required, function(req, res, next) {
   };
 
   console.log('/orders/upsert ******************');
-  console.log(req.body);
+  // console.log(req.body);
   models.Order.upsert(req.body, options).then(function() {
     updateAllSpreadsheets(req,res, next);
     res.redirect('/orders');

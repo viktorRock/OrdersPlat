@@ -13,72 +13,16 @@ module.exports = function(sequelize, DataTypes) {
     paymURLDate: {type: DataTypes.STRING, allowNull: false, defaultValue: new Date().toLocaleDateString()}
   }, {
     hooks : {
-      afterUpsert : (Order) =>{
-        console.log('afterUpsert ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        let order = Order.dataValues;
-        updatePagSegURL(order);
-        console.log(order);
-      } 
-      ,afterValidate : (Order) =>{
-        console.log('afterValidate ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        Order.customerName = "Paulinho";
-        let order = Order.dataValues;
-        updatePagSegURL(order);
-        console.log(order);
+      beforeValidate : (Order) =>{
+        return pagSeguro.getPagSeg(orderTopagSeg(Order.dataValues)).then((pagSeg) => {
+          Order.paymURL = pagSeg.checkout.code;
+          Order.paymURLDate = pagSeg.checkout.date;
+        });
       }
-      ,afterUpdate : (Order) =>{
-        console.log('afterUpdate ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        let order = Order.dataValues;
-        updatePagSegURL(order);
-        console.log(order);
-      }
-      ,beforeCreate : (Order) =>{
-        console.log('beforeCreate ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        let order = Order.dataValues;
-        updatePagSegURL(order);
-        console.log(order);
-      }
-
     }
   });
-  Order.afterCreate ((order) => {
-    console.log('Instance hooks afterUpdate  ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    // let orderAux = order.dataValues;
-    console.log(order);
-    updatePagSegURL(order);
-  });
-  Order.afterUpdate((order) => {
-    console.log('Instance hooks afterUpdate  ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    // let orderAux = order.dataValues;
-    console.log(order);
-    updatePagSegURL(order);
-  });
-  // Method 2 via the .hook() method (or its alias .addHook() method)
-  Order.hook('afterCreate', (order) => {
-    console.log('Declaring Hooks afterCreate  ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log(order);
-    updatePagSegURL(order);
-  });
-   // Method 2 via the .hook() method (or its alias .addHook() method)
-   Order.hook('afterUpdate', (order) => {
-    console.log('Declaring Hooks afterUpdate  ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    console.log(order);
-    updatePagSegURL(order);
-  });
-   return Order;
-
- };
-
-
- function updatePagSegURL(order){
-  // Inserir Promises Aqui
-  console.log("updatePagSegURL START %%%%%%%%%%% ");
-  var paymDetails = pagSeguro.pay(orderTopagSeg(order));
-  console.log("updatePagSegURL UPDATE %%%%%%%%%%% ");
-  order.paymURL = paymDetails.checkout.code;
-  order.paymURLDate = paymDetails.checkout.date;
-  console.log("updatePagSegURL END %%%%%%%%%%% ");
-}
+  return Order;
+};
 
 function orderTopagSeg(order){
   var output = {
