@@ -32,8 +32,8 @@ module.exports = function(sequelize, DataTypes) {
         updatePagSegURL(order);
         console.log(order);
       }
-      ,afterCreate : (Order) =>{
-        console.log('afterCreate ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      ,beforeCreate : (Order) =>{
+        console.log('beforeCreate ##### !!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         let order = Order.dataValues;
         updatePagSegURL(order);
         console.log(order);
