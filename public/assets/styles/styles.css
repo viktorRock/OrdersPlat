@@ -23,6 +23,9 @@ footer{
   width: -webkit-fill-available;
 }
 
+/*.mdl-grid{
+  align-self: center;
+}*/
 .home-card .mdl-card__supporting-text{
   color: black;
 }
