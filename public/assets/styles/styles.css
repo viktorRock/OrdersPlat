@@ -22,10 +22,16 @@ footer{
   /*position: fixed;*/
   width: -webkit-fill-available;
 }
-
-/*.mdl-grid{
+#defaultForm{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  float: left;
+}
+.mdl-grid{
   align-self: center;
-}*/
+}
 .home-card .mdl-card__supporting-text{
   color: black;
 }
@@ -129,14 +135,6 @@ footer{
 
   #profile{
 
-  }
-
-  #defaultForm{
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    float: left;
   }
 
   span.google-signin-icon {
