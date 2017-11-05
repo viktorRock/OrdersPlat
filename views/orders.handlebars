@@ -1,5 +1,5 @@
-<div class="mdl-grid ">
-  <section id="scroll-tab-Pedidos" class="ordersPlat-max-width mdl-cell--8-col relative mdl-layout__tab-panel is-active">
+<div class="">
+  <section id="scroll-tab-Pedidos" class="mdl-layout__tab-panel is-active">
     <a id="adicPedido" class="mdl-button mdl-js-button mdl-button--raised mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" href="/orders/create">
       <i class="material-icons" role="presentation">add</i>
       <span class="visuallyhidden">Add</span>
@@ -7,7 +7,7 @@
     <div class="mdl-grid">
       {{#each orders}}
       <!-- mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone -->
-      <div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+      <div class="mdl-cell mdl-cell--4-col  mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">Pedido #{{id}}</h2>
         </div>
@@ -41,7 +41,7 @@
     {{/each}}
 
     {{#unless orders}}
-    <div class="mdl-cell mdl-cell--6-col mdl-card mdl-shadow--2dp">
+    <div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Pedido #999</h2>
       </div>
