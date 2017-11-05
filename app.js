@@ -7,11 +7,10 @@ const bodyParser = require('body-parser');
 const expresshandlebars = require('express-handlebars');
 const routes = require('./routes');
 const app = express();
-
+const helmet = require('helmet');
 const session = require('express-session');
 const passport = require('passport');
 const config = require('./config');
-
 
 // [START session]
 // Configure the session and session storage.
@@ -22,6 +21,7 @@ const sessionConfig = {
   signed: true
 };
 
+app.use(helmet());
 app.use(session(sessionConfig));
 // [END session]
 
