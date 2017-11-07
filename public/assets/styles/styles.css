@@ -56,11 +56,9 @@ footer{
 #charts-card .mdl-card__title{
   background: url('../images/cards/charts-paper.jpeg') center / cover;
 }
-
-/*#charts-card .mdl-card__title {
-  color:  white  ;
+#privacy-card > .mdl-card__supporting-text {
+  color:  black  ;
 }
-*/
 
 .big-icon{
   font-size: 32px;

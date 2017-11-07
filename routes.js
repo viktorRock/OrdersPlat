@@ -39,8 +39,10 @@ router.get('/reports', function(req, res, next) {
   });
 });
 
-router.get('/oktaLogin', function(req, res, next) {
-  res.render('oktaLogin')
+router.get('/policy', function(req, res, next) {
+  res.render('policy',{
+    locals : res.locals
+  });
 });
 
 router.get('/orders', oauth2.required, function(req, res, next) {
