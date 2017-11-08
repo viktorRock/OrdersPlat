@@ -18,8 +18,8 @@ h4 a {
 }
 
 footer{
-  bottom: 0;
   width: -webkit-fill-available;
+  bottom: 0;
 }
 #defaultForm{
   text-align: center;
@@ -57,10 +57,12 @@ footer{
   background: url('../images/cards/charts-paper.jpeg') center / cover;
 }
 #privacy-card{
-  padding: 24px;
+  padding: 4px;
+  /*text-align: justify;*/
 }
 #privacy-card > .mdl-card__supporting-text {
   color:  black  ;
+  text-align: justify;
 }
 
 .big-icon{
@@ -96,6 +98,10 @@ footer{
   margin-right: 24px;
   margin-bottom: 48px;
   z-index: 999  ;
+}
+
+.mdl-mini-footer--right-section {
+  padding-right: 64px;
 }
 
 @media only screen and (min-width: 768px) {

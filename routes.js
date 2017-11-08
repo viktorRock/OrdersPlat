@@ -116,6 +116,8 @@ router.get('/orders/close/:id', oauth2.required, function(req, res, next) {
 
 router.post('/orders/upsert', oauth2.required, function(req, res, next) {
   req.body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  req.body.customerId=res.locals.profile.id;
+  req.body.customerEmail=res.locals.profile.email;
   var options = {
     hooks: true
   };

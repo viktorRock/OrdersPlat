@@ -3,7 +3,9 @@ var pagSeguro = require('../lib/pagSeg');
 
 module.exports = function(sequelize, DataTypes) {
   const Order = sequelize.define('Order', {
+    customerId: {type: DataTypes.STRING, allowNull: false},
     customerName: {type: DataTypes.STRING, allowNull: false},
+    customerEmail: {type: DataTypes.STRING, allowNull: false},
     productCode: {type: DataTypes.STRING, allowNull: false},
     unitsOrdered: {type: DataTypes.INTEGER, allowNull: false},
     unitPrice: {type: DataTypes.FLOAT, allowNull: false},
