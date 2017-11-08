@@ -22,14 +22,14 @@ function showError(error) {
   console.log(error);
   var snackbar = $('#snackbar');
   snackbar.addClass('error');
-  snackbar.get(0).MaterialSnackbar.showSnackbar(error);
+  snackbar.get(0).MaterialSnackbar.showSnackbar("WebError : " + error);
 }
 
 function showMessage(message) {
   var snackbar = $('#snackbar');
   snackbar.removeClass('error');
   snackbar.get(0).MaterialSnackbar.showSnackbar({
-    message: message
+    message: "WebMsg : " + message
   });
 }
 
@@ -43,7 +43,10 @@ $(function() {
     makeRequest(method, url, function(err, spreadsheet) {
       if (err) return showError(err);
       window.location.reload();
-      if(!msgDict[relatedElem]){showMessage(msgDict[relatedElem]);}
+      if(!msgDict[relatedElem]){
+        showMessage(msgDict[relatedElem]);
+        console.log(msgDict[relatedElem]);
+      }
     });
   });
 

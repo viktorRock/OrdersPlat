@@ -34,10 +34,18 @@ router.get('/index', function(req, res, next) {
 });
 
 router.get('/reports', function(req, res, next) {
-  res.render('reports',{
-    locals : res.locals
+  var options = {
+    order: [sortCriteriaList]
+  };
+  Sequelize.Promise.all([
+    models.Spreadsheet.findAll()
+    ]).then(function(results) {
+      res.render('reports', {
+        spreadsheets: results[0],
+        locals : res.locals
+      });  
+    }); 
   });
-});
 
 router.get('/policy', function(req, res, next) {
   res.render('policy',{
@@ -51,13 +59,11 @@ router.get('/orders', oauth2.required, function(req, res, next) {
   };
 
   Sequelize.Promise.all([
-    models.Order.findAll(options),
-    models.Spreadsheet.findAll(options)
+    models.Order.findAll(options)
     ]).then(function(results) {
 
       res.render('orders', {
         orders: results[0],
-        spreadsheets: results[1],
         locals : res.locals,
         paymJS : getPagSegJS()
       });  
@@ -121,9 +127,6 @@ router.post('/orders/upsert', oauth2.required, function(req, res, next) {
   var options = {
     hooks: true
   };
-
-  console.log('/orders/upsert ******************');
-  // console.log(req.body);
   models.Order.upsert(req.body, options).then(function() {
     updateAllSpreadsheets(req,res, next);
     res.redirect('/orders');
@@ -169,6 +172,7 @@ router.post('/spreadsheets', oauth2.required, function(req, res, next) {
     var model = {
       id: spreadsheet.spreadsheetId,
       sheetId: spreadsheet.sheets[0].properties.sheetId,
+      customerId : res.locals.profile.id,
       name: spreadsheet.properties.title
     };
     models.Spreadsheet.create(model).then(function() {
@@ -187,7 +191,7 @@ router.post('/spreadsheets/:id/delete', oauth2.required, function(req, res, next
     return result.destroy();
   })
   .then(function() {
-    res.redirect('/orders');
+    res.redirect('/reports');
   }, function(err) {
     next(err);
   });
@@ -236,4 +240,24 @@ function updateSpreadsheet(spreadSheet, sheetsHelper) {
 function getPagSegJS(){
   return config.get('PAGSEG_JS');
 }
+
+//before customerID logic, it was 
+//Sequelize.Promise.all([models.Spreadsheet.findAll(), models.Order.findAll()])
+//.then(function(results)
+function getSheetsByCustId(custID){
+  return models.Spreadsheet.findAll({
+    where: {
+      customerId: custID
+    }
+  });
+}
+
+function getOrdersByCustId(custID){
+  return models.Order.findAll({
+    where: {
+      customerId: custID
+    }
+  });
+}
+
 module.exports = router;
