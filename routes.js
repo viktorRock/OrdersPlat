@@ -33,7 +33,7 @@ router.get('/index', function(req, res, next) {
   });
 });
 
-router.get('/reports', function(req, res, next) {
+router.get('/reports', oauth2.required, function(req, res, next) {
   var options = {
     order: [sortCriteriaList]
   };

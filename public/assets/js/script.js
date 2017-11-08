@@ -66,7 +66,11 @@ function makeRequest(method, url, callback) {
     },
     error: function(response) {
       setSpinnerActive(false);
-      return callback(new Error(response.responseJSON.message));
+      if(response.responseJSON){
+        return callback(new Error(response.responseJSON.message));
+      }else{
+        return callback(new Error(response));
+      }
     }
   });
 }
